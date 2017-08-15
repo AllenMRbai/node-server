@@ -1,0 +1,25 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "use koa koa-touter koa-bodyparser mime mz/fs nunjucks build a simple server.\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[Dnodr \u001b server.",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AllenMRbai/node-server.git"
+  },
+  "keywords": [
+    "node",
+    "server",
+    "koa",
+    "nunjucks"
+  ],
+  "author": "Allen Bai",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AllenMRbai/node-server/issues"
+  },
+  "homepage": "https://github.com/AllenMRbai/node-server#readme"
+}
