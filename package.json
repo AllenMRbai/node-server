@@ -21,5 +21,13 @@
   "bugs": {
     "url": "https://github.com/AllenMRbai/node-server/issues"
   },
-  "homepage": "https://github.com/AllenMRbai/node-server#readme"
+  "homepage": "https://github.com/AllenMRbai/node-server#readme",
+  "dependencies": {
+    "koa": "^2.3.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-router": "^7.2.1",
+    "mime": "^1.3.6",
+    "mz": "^2.6.0",
+    "nunjucks": "^3.0.1"
+  }
 }
