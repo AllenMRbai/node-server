@@ -1,29 +1,34 @@
 const path=require('path');
 const nunjucks=require('nunjucks')
 
-function createEnv(dir,opts){
+function createEnv(path,opts){
 	let
 		autoescape=opts.autoescape===undefined?true:opts.autoescape,
-		noCache=opt.noCache || false,
+		noCache=opts.noCache || false,
 		watch=opts.watch || false,
-		throwNoUndefined=opts.throwNoUndefined || false,
-		env=new nunjucks.Enviroment(
-				new nunjucks.FilesSystemLoader({
+		throwOnUndefined=opts.throwOnUndefined || false,
+		env=new nunjucks.Environment(
+				new nunjucks.FileSystemLoader(path,{
 					noCache:noCache,
 					watch:watch
 				}),{
 					autoescape:autoescape,
-					throwNoUndefined:throwNoUndefined
+					throwOnUndefined:throwOnUndefined
 				});
+	if(opts.filters){
+		for(let f in opts.filters){
+			env.addFilter(f,opts.filters[f])
+		}
+	}
 	return env;
 }
 
-modules.export=function(dir,opts){
-	let env=createEnv(dir,opts);
-	app.context.render=function(view,model){
-		return async (ctx,next)=>{
-			ctx.response.body=env.render(view,Object.assign({},ctx.state || {},model || {}));
-			ctx.response.type='text/html';
-		};
+function templating(path,opts,app){
+	let env=createEnv(path,opts);
+	app.context.render=function(view,model,ctx){
+		ctx.response.body=env.render(view,Object.assign({},ctx.state || {},model || {}));
+		ctx.response.type='text/html';
 	}
-};
+}
+
+module.exports=templating;

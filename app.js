@@ -4,11 +4,13 @@ const path=require('path');
 
 //vendor模块
 const Koa=require('koa');
+//import Koa from 'koa';
 const bodyParser=require('koa-bodyparser');
 
 //我的模块
-const router=require('./controller');//路由管理
+const routes=require('./controller');//路由管理
 const templating=require('./templating');//nunjucks模板渲染
+//import templating from './templating';
 
 const isProduction=process.env.NODE_ENV==='production';//获得当前设备是否是生产环境
 
@@ -16,9 +18,9 @@ const app=new Koa();
 
 //给context绑定render方法
 templating('views',{
-	noCache:true,
-	watch:true
-});
+	noCache:!isProduction,
+	watch:!isProduction
+},app);
 
 //注册bodyParser,用以后面对ctx.request.body的解析
 app.use(bodyParser());
@@ -31,7 +33,7 @@ app.use(async (ctx,next)=>{
 		execTime;
 	await next();
 	execTime=new Date().getTime()-startTime;
-	ctx.response.set('X-response-time',`${execTime}ms`);
+	ctx.response.set('X-Response-Time',`${execTime}ms`);
 });
 
 //静态文件管理(因为项目上线时的静态文件是部署在反向代理服务器内，如Ngix，所以需要判断当前运行环境)
@@ -41,7 +43,7 @@ if(!isProduction){
 }
 
 //添加路由
-app.use(router());
+app.use(routes());
 
 //监听3000端口
 app.listen(3000);
